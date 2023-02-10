@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<!--=== Coding by CodingLab | www.codinglabweb.com === -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!----======== datatables ======== -->
+    <link rel="stylesheet" href="css/jquery.dataTables.min.css">
+
+    <!--=========== sweet alert ========-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <!----===== Iconscout CSS ===== -->
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+    <!--<title>Admin Dashboard Panel</title>-->
+  </head>
+  <body>
+    <nav>
+      <div class="logo-name">
+        <div class="logo-image">
+          <img src="images/1.png" alt="">
+        </div>
+
+        <span class="logo_name">E-C PC</span>
+      </div>
+
+      <div class="menu-items">
+        <ul class="nav-links">
+          <li>
+            <a href="dashboard.html">
+              <i class="uil uil-estate"></i>
+              <span class="link-name">Dahsboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="user_table.html">
+              <i class="uil-user-circle"></i>
+              <span class="link-name">Users</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="uil uil-comments"></i>
+              <span class="link-name">Messages</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="uil uil-chart"></i>
+              <span class="link-name">Disabled User</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="uil uil-thumbs-up"></i>
+              <span class="link-name">Like</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="uil uil-share"></i>
+              <span class="link-name">Share</span>
+            </a>
+          </li>
+          <ul class="logout-mode">
+            <li>
+              <a href="#" onclick="logout()">
+                <i class="uil uil-signout"></i>
+                <span class="link-name">Logout</span>
+              </a>
+            </li>
+            <div class="mode-toggle">
+            </div>
+          </ul>
+        </ul>
+      </div>
+    </nav>
+
+    <section class="dashboard">
+      <div class="top">
+        <i class="uil uil-bars sidebar-toggle"></i>
+
+        <!-- <div class="search-box">
+          <i class="uil uil-search"></i>
+          <input type="text" placeholder="Search here..." />
+        </div>
+
+        <img src="images/1.png" alt=""> -->
+      </div>
+
+      <div class="dash-content">
+        <div class="overview">
+          <div class="title">
+            <i class="uil-comment-alt-message"></i>
+            <span class="text">Message Table</span>
+          </div>
+
+          <div class="activity">
+            <div style="overflow-x:auto;">
+              <table class="datas" id="myDataTable">
+                  <div class="activity-data">
+                  <thead>
+                      <tr>
+                        <div class="data number">
+                            <th class="data-title">#</th></span>
+                        </div>
+                          <div class="data names">
+                              <th class="data-title">Username</th></span>
+                          </div>
+                          <div class="data email">
+                              <th class="data-title">Email</th></span>
+                          </div>
+                          <div class="data joined">
+                              <th class="data-title">Joined</th>
+                          </div>
+                          <div class="data type">
+                              <th class="data-title">Type</th></span>
+                          </div>
+                          <div class="data status">
+                              <th class="data-title">Status</th></span>
+                          </div>
+                          <div class="data action">
+                              <th class="data-title">Action</th></span>
+                          </div>
+                      </tr>
+                  </thead>
+                  <tbody class="text">
+                      <tr>
+                          <td>1</td>
+                          <td>Ranel</td>
+                          <td>ranel.soliano@gmail.com</td>
+                          <td>2023-02-07</td>
+                          <td>Admin</td>
+                          <td>Online</td>
+                          <td><button><i class="fa fa-refresh" aria-hidden="true"></i></button><button><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+                      </tr>
+                      <tr>
+                          <td>2</td>
+                          <td>Lenar</td>
+                          <td>ranel.soliano@gmail.com</td>
+                          <td>2023-02-07</td>
+                          <td>Admin</td>
+                          <td>Online</td>
+                          <td><button><i class="fa fa-refresh" aria-hidden="true"></i></button><button><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+                      </tr>
+                  </tbody>
+              </div>
+              </table>
+          </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </section>
+  </body>
+        <script src="js/jquery.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/jquery.dataTables.min.js"></script>
+        <script src="js/script.js"></script>
+</html>
