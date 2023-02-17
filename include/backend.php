@@ -11,6 +11,18 @@ class backend
     {
         return self::register($username,$email,$password,$cpassword);
     }
+    public function viewData()
+    {
+        return self::recentRegister();
+    }
+    public function isOnline($flag,$email)
+    {
+        return self::onStatus($flag,$email);
+    }
+    public function isOffline($flag)
+    {
+        return self::offStatus($flag);
+    }
 
     private function checkLoginCredentials($user, $pass)
     {
@@ -72,7 +84,7 @@ class backend
                 $conn = new database();
                 if ($conn->getStatus()) {
                     $stmt = $conn->getCon()->prepare($this->registerQuery());
-                    $stmt->execute(array($username, $email, md5($password), md5($cpassword), $this->getDate(), "User", 0, 0));
+                    $stmt->execute(array($username, $email, md5($password), md5($cpassword), $this->getDate(), 1, "User", 0, 0));
                     $res = $stmt->fetch();
                     if (!$res) {
                         $conn->dbClose();
@@ -89,6 +101,84 @@ class backend
             }
         } catch (PDOException $th) {
             return $th;
+        }
+    }
+    private function recentRegister()
+    {
+        try {
+                $conn = new database();
+                if ($conn->getStatus()) {
+                    $stmt = $conn->getCon()->prepare($this->viewDataQuery());
+                    $stmt->execute(array());
+                    $result = $stmt->fetchAll();
+                    $conn->dbClose();
+                    return json_encode($result);
+                } else {
+                    return "403";
+                }
+            }catch (PDOException $th) {
+            return "501";
+        }
+    }
+
+    private function onStatus($flag,$email)
+    {
+        try {
+                $conn = new database();
+                if ($conn->getStatus()) {
+                    $stmt = $conn->getCon()->prepare($this->statusQuery());
+                    $stmt->execute(array($flag,$email));
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if (!$result) {
+                        $conn->dbClose();
+                        return 1;
+                    } else {
+                        $conn->dbClose();
+                        return 0;
+                    }
+                }
+        } catch (PDOException $th) {
+            return $th;
+        }
+    }
+
+    private function offStatus($flag)
+    {
+        try {
+            $conn = new database();
+            if ($conn->getStatus()) {
+                $stmt = $conn->getCon()->prepare($this->offStatusQuery());
+                $stmt->execute(array($flag,$this->getId()));
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                if (!$result) {
+                    $conn->dbClose();
+                    return 1;
+                } else {
+                    $conn->dbClose();
+                    return 0;
+                }
+            }
+    } catch (PDOException $th) {
+        return $th;
+    }
+    }
+
+    private function getId()
+    {
+        try {
+            $db = new database();
+            if ($db->getStatus()) {
+                $stmt = $db->getCon()->prepare($this->loginQuery());
+                $stmt->execute(array($_SESSION['email'], $_SESSION['password']));
+                $tmp = null;
+                $row = $stmt->fetch();
+                if ($row > 0) {
+                    $tmp = $row['id'];
+                }
+                return $tmp;
+            }
+        } catch (PDOException $th) {
+            echo $th;
         }
     }
 
@@ -120,6 +210,18 @@ class backend
     }
     private function registerQuery()
     {
-        return "INSERT INTO user(`username`, `email`, `password`, `cpassword`, `joined`, `type`, `status`, `isdisabled`) VALUES (?,?,?,?,?,?,?,?)";
+        return "INSERT INTO user(`username`, `email`, `password`, `cpassword`, `joined`, `recent`, `type`, `status`, `isdisabled`) VALUES (?,?,?,?,?,?,?,?,?)";
+    }
+    private function statusQuery()
+    {
+        return "UPDATE user SET `status` = ? WHERE `email` = ? ";
+    }
+    private function offStatusQuery()
+    {
+        return "UPDATE user SET `status` = ? WHERE `id` = ? ";
+    }
+    private function viewDataQuery()
+    {
+        return "SELECT * FROM user WHERE recent = 1";
     }
 }

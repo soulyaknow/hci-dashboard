@@ -20,6 +20,25 @@ if (isset($_POST['choice'])) {
                 $_POST['cpassword'],
             );
             break;
+        case 'displayData':
+            $backend = new backend();
+            echo $backend->viewData();
+            break;
+        
+        case 'onStatus':
+            $backend = new backend();
+            echo $backend->isOnline(
+                $_POST['flag'],
+                $_POST['user_email']
+            );
+            break;
+        
+        case 'offStatus':
+            $backend = new backend();
+            echo $backend->isOffline(
+                $_POST['flag']
+            );
+            break;
                 
         case 'logout':
             session_unset();

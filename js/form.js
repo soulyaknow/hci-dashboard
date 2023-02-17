@@ -62,11 +62,16 @@ var doLogin=()=>
             {
                 swal("Good job!", "Login Successfully!", "success");
                 setTimeout(()=>{location.replace("dashboard.html");}, 2500);
+
+                var status = 1;
+                isOnline(status);
             }
             else if(data == 2)
             {
                 swal("Good job!", "Login Successfully!", "success");
                 setTimeout(()=>{location.replace("afterIndex.html");}, 2500);
+                var status = 1;
+                isOnline(status);
             }
             else if(data == 3)
             {
@@ -87,11 +92,28 @@ var doLogin=()=>
                     swal("Warning!", "Incorrect Username and Password!", "warning");
                     if(login_attemps == 0)
                     {
-                        document.getElementById("user_email").disabled = true;
-                        document.getElementById("user_password").disabled = true;
+                        document.querySelector("user_email").disabled = true;
+                        document.querySelector("user_password").disabled = true;
                     }
                 }
             }
+        },
+        error: function(error)
+        {
+            console.log(error);
+        }
+    })
+}
+
+var isOnline=(flag)=>
+{
+    $.ajax({
+        type: "POST",
+        url: "include/router.php",
+        data: {choice: 'onStatus', flag:flag,user_email:$('#user_email').val()},
+        success: function(data)
+        {
+            console.log(data);
         },
         error: function(error)
         {
